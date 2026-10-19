@@ -1,0 +1,1101 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BH WhatsApp Desk</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+:root {
+    --primary: #176b55;
+    --primary-light: #e9f5f0;
+    --sidebar: #172b27;
+    --border: #e5e9e7;
+    --muted: #718078;
+}
+body {
+    background: #f5f7f6;
+    font-family: Arial, sans-serif;
+    color: #26332e;
+    font-size: 14px;
+}
+.sidebar {
+    width: 245px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--sidebar);
+    color: #fff;
+    overflow-y: auto;
+    z-index: 1000;
+}
+.brand {
+    padding: 22px 18px;
+    border-bottom: 1px solid #ffffff18;
+}
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    display: inline-grid;
+    place-items: center;
+    background: #25a879;
+    border-radius: 12px;
+    font-size: 22px;
+    margin-left: 10px;
+}
+.nav-heading {
+    padding: 18px 20px 8px;
+    color: #93aaa1;
+    font-size: 11px;
+}
+.sidebar .nav-link {
+    color: #c2d0ca;
+    padding: 11px 18px;
+    margin: 2px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    color: #fff;
+    background: #ffffff17;
+}
+.sidebar .nav-link.active {
+    border-right: 3px solid #45d3a0;
+}
+.main {
+    margin-right: 245px;
+    min-height: 100vh;
+}
+.topbar {
+    height: 70px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+}
+.content { padding: 26px; }
+.page { display: none; }
+.page.active { display: block; }
+.card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #142a2010;
+}
+.card-header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 18px;
+    font-weight: 600;
+}
+.stat-card { padding: 19px; height: 100%; }
+.stat-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: grid;
+    place-items: center;
+    font-size: 21px;
+}
+.stat-value { font-size: 27px; font-weight: 700; margin: 15px 0 5px; }
+.muted { color: var(--muted); }
+.btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+.btn-primary:hover {
+    background: #10513f;
+    border-color: #10513f;
+}
+.form-control, .form-select {
+    min-height: 39px;
+    border-color: #dce4df;
+    font-size: 13px;
+}
+.form-label { font-weight: 600; margin-bottom: 7px; }
+.table { vertical-align: middle; margin-bottom: 0; }
+.table th {
+    color: #64736b;
+    font-size: 12px;
+    font-weight: 600;
+    background: #fafcfb;
+    white-space: nowrap;
+}
+.table td { padding: 13px 12px; }
+.badge-soft {
+    background: #eaf5ef;
+    color: #176b55;
+}
+.badge-warning-soft {
+    background: #fff2d8;
+    color: #93640a;
+}
+.badge-danger-soft {
+    background: #fde9e7;
+    color: #b23b32;
+}
+.badge-secondary-soft {
+    background: #edf0ef;
+    color: #58655f;
+}
+.settings-nav .list-group-item {
+    border: 0;
+    border-radius: 8px !important;
+    margin-bottom: 5px;
+    padding: 13px;
+    text-align: right;
+    background: transparent;
+}
+.settings-nav .list-group-item.active {
+    color: var(--primary);
+    background: var(--primary-light);
+    font-weight: 600;
+}
+.settings-panel { display: none; }
+.settings-panel.active { display: block; }
+.setting-row {
+    padding: 15px 0;
+    border-bottom: 1px solid #edf0ee;
+}
+.setting-row:last-child { border-bottom: 0; }
+.form-check-input:checked { background-color: var(--primary); border-color: var(--primary); }
+.chat-list {
+    max-height: 590px;
+    overflow-y: auto;
+}
+.chat-item {
+    padding: 14px;
+    border-bottom: 1px solid #edf0ee;
+    cursor: pointer;
+}
+.chat-item:hover, .chat-item.active { background: var(--primary-light); }
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #dceee6;
+    color: var(--primary);
+    font-weight: bold;
+    flex-shrink: 0;
+}
+.chat-message {
+    background: #f0f4f1;
+    border-radius: 12px 12px 0 12px;
+    padding: 12px;
+    max-width: 80%;
+    margin: 10px 0;
+}
+.chat-message.agent { background: #e2f5e8; margin-right: auto; }
+.score-box {
+    background: #f8faf9;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+}
+.section-title { font-size: 19px; font-weight: 700; }
+.empty-state { padding: 35px; text-align: center; color: var(--muted); }
+@media(max-width: 900px) {
+    .sidebar { width: 70px; }
+    .brand { padding: 15px 12px; }
+    .brand-name, .nav-heading, .sidebar .nav-link span { display: none; }
+    .sidebar .nav-link { justify-content: center; padding: 13px 5px; }
+    .main { margin-right: 70px; }
+    .content { padding: 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="brand d-flex align-items-center">
+        <span class="brand-icon"><i class="bi bi-whatsapp"></i></span>
+        <div class="brand-name">
+            <div class="fw-bold">BH WhatsApp Desk</div>
+            <small class="text-white-50">Customer Service</small>
+        </div>
+    </div>
+
+    <div class="nav-heading">WORKSPACE</div>
+    <nav>
+        <a class="nav-link active" data-page="dashboard"><i class="bi bi-grid"></i><span>Dashboard</span></a>
+        <a class="nav-link" data-page="inbox"><i class="bi bi-chat-left-text"></i><span>Conversations</span></a>
+        <a class="nav-link" data-page="queue"><i class="bi bi-inboxes"></i><span>Queue</span></a>
+        <a class="nav-link" data-page="followups"><i class="bi bi-calendar-check"></i><span>Follow-ups</span></a>
+        <a class="nav-link" data-page="requests"><i class="bi bi-bag-check"></i><span>Item Requests</span></a>
+    </nav>
+
+    <div class="nav-heading">QUALITY & REPORTS</div>
+    <nav>
+        <a class="nav-link" data-page="reports"><i class="bi bi-bar-chart"></i><span>Reports</span></a>
+        <a class="nav-link" data-page="performance"><i class="bi bi-graph-up-arrow"></i><span>Employee Performance</span></a>
+        <a class="nav-link" data-page="reviews"><i class="bi bi-clipboard-check"></i><span>Reviews</span></a>
+        <a class="nav-link" data-page="ai"><i class="bi bi-robot"></i><span>AI Scoring</span></a>
+    </nav>
+
+    <div class="nav-heading">ADMINISTRATION</div>
+    <nav>
+        <a class="nav-link" data-page="employees"><i class="bi bi-people"></i><span>Employees</span></a>
+        <a class="nav-link" data-page="roles"><i class="bi bi-shield-check"></i><span>Roles & Permissions</span></a>
+        <a class="nav-link" data-page="devices"><i class="bi bi-pc-display"></i><span>Devices</span></a>
+        <a class="nav-link" data-page="settings"><i class="bi bi-gear"></i><span>Settings</span></a>
+        <a class="nav-link" data-page="diagnostics"><i class="bi bi-activity"></i><span>WhatsApp Diagnostics</span></a>
+    </nav>
+</aside>
+
+<main class="main">
+    <header class="topbar">
+        <div>
+            <span class="fw-bold" id="pageTitle">Dashboard</span>
+            <span class="muted mx-2">/</span>
+            <small class="muted">BH WhatsApp Desk</small>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <span class="badge badge-soft"><i class="bi bi-circle-fill me-1"></i> Application UI</span>
+            <div class="avatar">AD</div>
+        </div>
+    </header>
+
+    <div class="content">
+
+    <!-- DASHBOARD -->
+    <section class="page active" id="dashboard">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h4 class="fw-bold mb-1">Dashboard</h4>
+                <div class="muted">Customer service overview</div>
+            </div>
+            <button class="btn btn-outline-secondary" onclick="navigate('diagnostics')">
+                <i class="bi bi-activity me-1"></i> Diagnostics
+            </button>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-xl-3 col-sm-6"><div class="card stat-card">
+                <div class="stat-icon"><i class="bi bi-chat-dots"></i></div>
+                <div class="stat-value">128</div><div class="muted">Total Conversations</div>
+            </div></div>
+            <div class="col-xl-3 col-sm-6"><div class="card stat-card">
+                <div class="stat-icon"><i class="bi bi-envelope-exclamation"></i></div>
+                <div class="stat-value">24</div><div class="muted">Unread Conversations</div>
+            </div></div>
+            <div class="col-xl-3 col-sm-6"><div class="card stat-card">
+                <div class="stat-icon"><i class="bi bi-clock-history"></i></div>
+                <div class="stat-value">12</div><div class="muted">Pending Follow-ups</div>
+            </div></div>
+            <div class="col-xl-3 col-sm-6"><div class="card stat-card">
+                <div class="stat-icon"><i class="bi bi-clipboard-check"></i></div>
+                <div class="stat-value">8</div><div class="muted">Reviews Pending</div>
+            </div></div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">Recent Conversations</div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead><tr><th>Conversation</th><th>Assigned Employee</th><th>Status</th><th>Last Activity</th></tr></thead>
+                            <tbody>
+                                <tr><td>Customer 001</td><td>Ahmed</td><td><span class="badge badge-soft">Open</span></td><td>10:42</td></tr>
+                                <tr><td>Customer 002</td><td>Mona</td><td><span class="badge badge-warning-soft">Pending</span></td><td>10:20</td></tr>
+                                <tr><td>Customer 003</td><td>Unassigned</td><td><span class="badge badge-danger-soft">Unread</span></td><td>09:55</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card h-100">
+                    <div class="card-header">WhatsApp Status</div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3"><span>Session</span><span class="badge badge-secondary-soft" id="dashSession">Not verified</span></div>
+                        <div class="d-flex justify-content-between mb-3"><span>Backend API</span><span class="badge badge-secondary-soft">Not tested</span></div>
+                        <div class="d-flex justify-content-between mb-3"><span>Last Sync</span><span class="muted">—</span></div>
+                        <button class="btn btn-outline-primary w-100" onclick="navigate('settings','whatsapp')">Configure WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INBOX -->
+    <section class="page" id="inbox">
+        <div class="d-flex justify-content-between mb-3">
+            <div><h4 class="fw-bold">Conversations</h4><p class="muted">Read-only conversation viewer</p></div>
+            <button class="btn btn-outline-secondary" onclick="navigate('diagnostics')"><i class="bi bi-arrow-repeat me-1"></i> Refresh Status</button>
+        </div>
+        <div class="card overflow-hidden">
+            <div class="row g-0">
+                <div class="col-lg-4 border-start">
+                    <div class="p-3"><input class="form-control" placeholder="Search conversations..."></div>
+                    <div class="chat-list">
+                        <div class="chat-item active" onclick="selectChat(this,'Customer 001')">
+                            <div class="d-flex gap-3"><div class="avatar">01</div><div class="flex-grow-1"><div class="fw-bold">Customer 001</div><small class="muted">Last message preview</small></div><small>10:42</small></div>
+                        </div>
+                        <div class="chat-item" onclick="selectChat(this,'Customer 002')">
+                            <div class="d-flex gap-3"><div class="avatar">02</div><div class="flex-grow-1"><div class="fw-bold">Customer 002</div><small class="muted">Last message preview</small></div><small>10:20</small></div>
+                        </div>
+                        <div class="chat-item" onclick="selectChat(this,'Customer 003')">
+                            <div class="d-flex gap-3"><div class="avatar">03</div><div class="flex-grow-1"><div class="fw-bold">Customer 003</div><small class="muted">Last message preview</small></div><small>09:55</small></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+                        <div class="d-flex gap-2 align-items-center"><div class="avatar">01</div><div><div class="fw-bold" id="chatTitle">Customer 001</div><small class="muted">Conversation details</small></div></div>
+                        <button class="btn btn-outline-success btn-sm" onclick="alert('يحتاج ربطًا بواجهة Electron لفتح المحادثة في WhatsApp.')"><i class="bi bi-whatsapp me-1"></i> Open in WhatsApp</button>
+                    </div>
+                    <div class="p-4" style="min-height:340px;background:#fbfcfb">
+                        <div class="text-center muted small mb-4">Conversation messages</div>
+                        <div class="chat-message">Example customer message <div class="text-end muted small mt-2">10:40</div></div>
+                        <div class="chat-message agent">Example agent response <div class="text-end muted small mt-2">10:42</div></div>
+                        <div class="alert alert-light border mt-4 mb-0"><i class="bi bi-info-circle me-1"></i> هذه الشاشة للقراءة فقط. لا يتم إرسال رسائل من هذه الواجهة.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUEUE -->
+    <section class="page" id="queue">
+        <div class="d-flex justify-content-between mb-4"><h4 class="fw-bold">Queue</h4><button class="btn btn-outline-secondary" onclick="alert('اربط الإجراء بمنطق توزيع المحادثات في التطبيق.')">Refresh Queue</button></div>
+        <div class="card"><div class="table-responsive"><table class="table">
+            <thead><tr><th>Conversation</th><th>Priority</th><th>Assigned To</th><th>Waiting Since</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody><tr><td>Customer 003</td><td><span class="badge badge-danger-soft">High</span></td><td>Unassigned</td><td>09:55</td><td>Waiting</td><td><button class="btn btn-sm btn-outline-primary" onclick="alert('اربط التعيين بواجهة إدارة المحادثات.')">Assign</button></td></tr>
+            <tr><td>Customer 004</td><td>Normal</td><td>Ahmed</td><td>09:40</td><td>In Progress</td><td><button class="btn btn-sm btn-outline-secondary">View</button></td></tr></tbody>
+        </table></div></div>
+    </section>
+
+    <!-- FOLLOWUPS -->
+    <section class="page" id="followups">
+        <div class="d-flex justify-content-between align-items-center mb-3"><h4 class="fw-bold">Follow-ups</h4><button class="btn btn-primary" onclick="openRecordModal('Follow-up')"><i class="bi bi-plus-lg me-1"></i> Add Follow-up</button></div>
+        <div class="card"><div class="table-responsive"><table class="table">
+            <thead><tr><th>Customer</th><th>Assigned Employee</th><th>Due Date</th><th>Notes</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="followupRows"><tr><td>Customer 002</td><td>Mona</td><td>2026-10-20</td><td>Follow-up example</td><td><span class="badge badge-warning-soft">Pending</span></td><td><button class="btn btn-sm btn-outline-primary" onclick="editRow(this)">Edit</button></td></tr></tbody>
+        </table></div></div>
+    </section>
+
+    <!-- REQUESTS -->
+    <section class="page" id="requests">
+        <div class="d-flex justify-content-between align-items-center mb-3"><h4 class="fw-bold">Item Requests</h4><button class="btn btn-primary" onclick="openRecordModal('Item Request')"><i class="bi bi-plus-lg me-1"></i> Add Request</button></div>
+        <div class="card"><div class="table-responsive"><table class="table">
+            <thead><tr><th>Request ID</th><th>Customer</th><th>Item</th><th>Employee</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody><tr><td>REQ-001</td><td>Customer 001</td><td>Example item</td><td>Ahmed</td><td>2026-10-19</td><td><span class="badge badge-warning-soft">Pending</span></td><td><button class="btn btn-sm btn-outline-primary" onclick="editRow(this)">Edit</button></td></tr></tbody>
+        </table></div></div>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="page" id="reports">
+        <h4 class="fw-bold mb-4">Reports</h4>
+        <div class="card mb-3"><div class="card-body"><div class="row g-3 align-items-end">
+            <div class="col-md-3"><label class="form-label">From</label><input type="date" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">To</label><input type="date" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">Employee</label><select class="form-select"><option>All Employees</option><option>Ahmed</option><option>Mona</option></select></div>
+            <div class="col-md-3"><button class="btn btn-primary w-100" onclick="alert('اربط الفلاتر بمصدر بيانات التقارير.')">Generate Report</button></div>
+        </div></div></div>
+        <div class="row g-3">
+            <div class="col-md-4"><div class="card stat-card"><div class="muted">Total Conversations</div><div class="stat-value">1,284</div></div></div>
+            <div class="col-md-4"><div class="card stat-card"><div class="muted">Average Response Time</div><div class="stat-value">—</div><small class="muted">Available when data is connected</small></div></div>
+            <div class="col-md-4"><div class="card stat-card"><div class="muted">Resolution Rate</div><div class="stat-value">—</div><small class="muted">Available when data is connected</small></div></div>
+        </div>
+    </section>
+
+    <!-- PERFORMANCE -->
+    <section class="page" id="performance">
+        <h4 class="fw-bold mb-3">Employee Performance</h4>
+        <div class="card"><div class="table-responsive"><table class="table">
+            <thead><tr><th>Employee</th><th>Assigned Conversations</th><th>Completed</th><th>Pending</th><th>Review Score</th></tr></thead>
+            <tbody><tr><td>Ahmed</td><td>—</td><td>—</td><td>—</td><td>Not available</td></tr><tr><td>Mona</td><td>—</td><td>—</td><td>—</td><td>Not available</td></tr></tbody>
+        </table></div></div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="page" id="reviews">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div><h4 class="fw-bold mb-1">Reviews</h4><div class="muted">Conversation quality assurance and employee evaluation</div></div>
+            <button class="btn btn-primary" onclick="openReview()"><i class="bi bi-plus-lg me-1"></i> Start Review</button>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-3"><div class="card stat-card"><div class="muted">Pending Reviews</div><div class="stat-value">8</div></div></div>
+            <div class="col-md-3"><div class="card stat-card"><div class="muted">In Progress</div><div class="stat-value">3</div></div></div>
+            <div class="col-md-3"><div class="card stat-card"><div class="muted">Completed</div><div class="stat-value">42</div></div></div>
+            <div class="col-md-3"><div class="card stat-card"><div class="muted">Average Score</div><div class="stat-value">—</div></div></div>
+        </div>
+
+        <div class="card mb-3"><div class="card-body"><div class="row g-2">
+            <div class="col-md-4"><input class="form-control" placeholder="Search customer or conversation"></div>
+            <div class="col-md-3"><select class="form-select"><option>All Review Statuses</option><option>Not Reviewed</option><option>In Review</option><option>Completed</option><option>Needs Re-review</option></select></div>
+            <div class="col-md-3"><select class="form-select"><option>All Employees</option><option>Ahmed</option><option>Mona</option></select></div>
+            <div class="col-md-2"><button class="btn btn-outline-secondary w-100">Filter</button></div>
+        </div></div></div>
+
+        <div class="card"><div class="table-responsive"><table class="table">
+            <thead><tr><th>Conversation</th><th>Employee</th><th>Reviewer</th><th>Review Date</th><th>Score</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="reviewRows">
+                <tr><td>Customer 001</td><td>Ahmed</td><td>Supervisor</td><td>—</td><td>—</td><td><span class="badge badge-warning-soft">Not Reviewed</span></td><td><button class="btn btn-sm btn-primary" onclick="openReview('Customer 001')">Start Review</button></td></tr>
+                <tr><td>Customer 002</td><td>Mona</td><td>Supervisor</td><td>—</td><td>—</td><td><span class="badge badge-secondary-soft">In Review</span></td><td><button class="btn btn-sm btn-outline-primary" onclick="openReview('Customer 002')">Continue</button></td></tr>
+            </tbody>
+        </table></div></div>
+    </section>
+
+    <!-- AI SCORING -->
+    <section class="page" id="ai">
+        <div class="d-flex justify-content-between align-items-center mb-3"><h4 class="fw-bold">AI Scoring</h4><span class="badge badge-secondary-soft">Integration required</span></div>
+        <div class="alert alert-info"><i class="bi bi-info-circle me-2"></i>تقييم الذكاء الاصطناعي يحتاج ربط خدمة AI بمصدر المحادثات. القيم أدناه ليست نتائج فعلية.</div>
+        <div class="card"><div class="table-responsive"><table class="table">
+            <thead><tr><th>Conversation</th><th>Employee</th><th>AI Score</th><th>Human Score</th><th>Difference</th><th>Action</th></tr></thead>
+            <tbody><tr><td>Customer 001</td><td>Ahmed</td><td>—</td><td>—</td><td>—</td><td><button class="btn btn-sm btn-outline-primary" onclick="openReview('Customer 001')">Compare Review</button></td></tr></tbody>
+        </table></div></div>
+    </section>
+
+    <!-- EMPLOYEES -->
+    <section class="page" id="employees">
+        <div class="d-flex justify-content-between align-items-center mb-3"><div><h4 class="fw-bold">Employees</h4><div class="muted">Manage users and assignments</div></div><button class="btn btn-primary" onclick="openEmployee()"><i class="bi bi-plus-lg me-1"></i> Add Employee</button></div>
+        <div class="card"><div class="table-responsive"><table class="table">
+            <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="employeeRows">
+                <tr><td>Ahmed</td><td>ahmed</td><td>Agent</td><td><span class="badge badge-soft">Active</span></td><td><button class="btn btn-sm btn-outline-primary" onclick="editEmployee(this)">Edit</button></td></tr>
+                <tr><td>Mona</td><td>mona</td><td>Reviewer</td><td><span class="badge badge-soft">Active</span></td><td><button class="btn btn-sm btn-outline-primary" onclick="editEmployee(this)">Edit</button></td></tr>
+            </tbody>
+        </table></div></div>
+    </section>
+
+    <!-- ROLES -->
+    <section class="page" id="roles">
+        <div class="d-flex justify-content-between align-items-center mb-3"><div><h4 class="fw-bold">Roles & Permissions</h4><div class="muted">Control access by role</div></div><button class="btn btn-primary" onclick="openRole()"><i class="bi bi-plus-lg me-1"></i> Add Role</button></div>
+        <div class="card"><div class="table-responsive"><table class="table">
+            <thead><tr><th>Role</th><th>Description</th><th>Permissions</th><th>Actions</th></tr></thead>
+            <tbody id="roleRows">
+                <tr><td>Administrator</td><td>Full system access</td><td>All</td><td><button class="btn btn-sm btn-outline-primary" onclick="editRole(this)">Edit</button></td></tr>
+                <tr><td>Supervisor</td><td>Team supervision</td><td>Team, reports, reviews</td><td><button class="btn btn-sm btn-outline-primary" onclick="editRole(this)">Edit</button></td></tr>
+                <tr><td>Agent</td><td>Assigned conversations</td><td>Conversations, follow-ups</td><td><button class="btn btn-sm btn-outline-primary" onclick="editRole(this)">Edit</button></td></tr>
+                <tr><td>Reviewer</td><td>Quality reviews</td><td>Read conversations, reviews</td><td><button class="btn btn-sm btn-outline-primary" onclick="editRole(this)">Edit</button></td></tr>
+            </tbody>
+        </table></div></div>
+    </section>
+
+    <!-- DEVICES -->
+    <section class="page" id="devices">
+        <div class="d-flex justify-content-between align-items-center mb-3"><div><h4 class="fw-bold">Devices</h4><div class="muted">Application devices and WhatsApp sessions</div></div><button class="btn btn-primary" onclick="openDevice()"><i class="bi bi-plus-lg me-1"></i> Add Device</button></div>
+        <div class="card"><div class="table-responsive"><table class="table">
+            <thead><tr><th>Device Name</th><th>Assigned Employee</th><th>Connection</th><th>Last Seen</th><th>Actions</th></tr></thead>
+            <tbody id="deviceRows"><tr><td>Main Device</td><td>Ahmed</td><td><span class="badge badge-secondary-soft">Not verified</span></td><td>—</td><td><button class="btn btn-sm btn-outline-primary" onclick="editDevice(this)">Configure</button></td></tr></tbody>
+        </table></div></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="page" id="settings">
+        <div class="mb-4"><h4 class="fw-bold mb-1">Settings</h4><div class="muted">Configure application, connection, WhatsApp and security</div></div>
+        <div class="row g-3">
+            <div class="col-lg-3">
+                <div class="card p-2 settings-nav" id="settingsNav">
+                    <button class="list-group-item active" data-target="general"><i class="bi bi-sliders me-2"></i> General</button>
+                    <button class="list-group-item" data-target="connection"><i class="bi bi-plug me-2"></i> Connection</button>
+                    <button class="list-group-item" data-target="whatsapp"><i class="bi bi-whatsapp me-2"></i> WhatsApp</button>
+                    <button class="list-group-item" data-target="selectors"><i class="bi bi-code-square me-2"></i> WhatsApp Selectors</button>
+                    <button class="list-group-item" data-target="data"><i class="bi bi-database me-2"></i> Data & Privacy</button>
+                    <button class="list-group-item" data-target="security"><i class="bi bi-shield-lock me-2"></i> Security</button>
+                    <button class="list-group-item" data-target="notifications"><i class="bi bi-bell me-2"></i> Notifications</button>
+                    <button class="list-group-item" data-target="system"><i class="bi bi-gear me-2"></i> System</button>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="card"><div class="card-body p-4">
+
+                    <!-- GENERAL -->
+                    <div class="settings-panel active" id="setting-general">
+                        <h5 class="fw-bold">General Settings</h5><p class="muted">Basic application preferences</p><hr>
+                        <div class="row g-3">
+                            <div class="col-md-6"><label class="form-label">Application Name</label><input id="appName" class="form-control" value="BH WhatsApp Desk"></div>
+                            <div class="col-md-6"><label class="form-label">Language</label><select class="form-select"><option>Arabic</option><option>English</option></select></div>
+                            <div class="col-md-6"><label class="form-label">Date Format</label><select class="form-select"><option>yyyy-MM-dd</option><option>dd/MM/yyyy</option></select></div>
+                            <div class="col-md-6"><label class="form-label">Theme</label><select class="form-select"><option>Light</option><option>Dark</option><option>System</option></select></div>
+                        </div>
+                    </div>
+
+                    <!-- CONNECTION -->
+                    <div class="settings-panel" id="setting-connection">
+                        <h5 class="fw-bold">Connection Settings</h5><p class="muted">Backend API and device credentials</p><hr>
+                        <div class="mb-3"><label class="form-label">Backend API URL</label><input id="apiUrl" class="form-control" placeholder="https://your-api.example.com"></div>
+                        <div class="mb-3"><label class="form-label">Device Token</label><input id="deviceToken" type="password" class="form-control" placeholder="Enter device token"></div>
+                        <div class="d-flex gap-2 align-items-center mb-3"><span class="muted">Connection Status:</span><span class="badge badge-secondary-soft" id="apiStatus">Not tested</span></div>
+                        <button class="btn btn-outline-primary" onclick="testConnection()"><i class="bi bi-plug me-1"></i> Test Connection</button>
+                    </div>
+
+                    <!-- WHATSAPP -->
+                    <div class="settings-panel" id="setting-whatsapp">
+                        <h5 class="fw-bold">WhatsApp Configuration</h5><p class="muted">Session, synchronization and reading options</p><hr>
+                        <div class="alert alert-warning"><i class="bi bi-shield-exclamation me-2"></i>Read-only mode: this application reads conversations. Sending messages is not enabled here.</div>
+                        <div class="mb-3"><label class="form-label">WhatsApp Web URL</label><input id="waUrl" class="form-control" value="https://web.whatsapp.com/"></div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6"><label class="form-label">Read Mode</label><input class="form-control" value="Read Only" disabled></div>
+                            <div class="col-md-6"><label class="form-label">Sync Interval (seconds)</label><input id="syncInterval" type="number" min="5" class="form-control" value="30"></div>
+                        </div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Read Chat List</strong><div class="muted">Collect available conversations</div></div><div class="form-check form-switch"><input id="readChats" class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Read Messages</strong><div class="muted">Read visible conversation messages</div></div><div class="form-check form-switch"><input id="readMessages" class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Read Labels</strong><div class="muted">Read WhatsApp chat labels</div></div><div class="form-check form-switch"><input id="readLabels" class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Read Unread Counts</strong><div class="muted">Read unread message counters</div></div><div class="form-check form-switch"><input id="readUnread" class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Include Archived Chats</strong><div class="muted">Read archived conversations when available</div></div><div class="form-check form-switch"><input id="readArchived" class="form-check-input" type="checkbox"></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Include Groups</strong><div class="muted">Include group conversations when available</div></div><div class="form-check form-switch"><input id="readGroups" class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Open in WhatsApp</strong><div class="muted">Allow opening a selected chat in WhatsApp Web</div></div><div class="form-check form-switch"><input id="openWhatsApp" class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <button class="btn btn-primary" onclick="saveSettings()">Save Configuration</button>
+                            <button class="btn btn-outline-primary" onclick="navigate('diagnostics')">Run Diagnostics</button>
+                            <button class="btn btn-outline-secondary" onclick="alert('يحتاج ربطًا بخدمة Electron لإعادة تشغيل جلسة WhatsApp.')">Restart WhatsApp Session</button>
+                        </div>
+                    </div>
+
+                    <!-- SELECTORS -->
+                    <div class="settings-panel" id="setting-selectors">
+                        <h5 class="fw-bold">WhatsApp Selectors</h5><p class="muted">Configure selectors used by the WhatsApp Web reader</p><hr>
+                        <div class="alert alert-info">تغيير المحددات يؤثر على قراءة WhatsApp. احتفظ بنسخة صحيحة من الإعدادات قبل التعديل.</div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6"><label class="form-label">Chat List Selector</label><input id="selectorChatList" class="form-control" placeholder="CSS selector"></div>
+                            <div class="col-md-6"><label class="form-label">Message List Selector</label><input id="selectorMessageList" class="form-control" placeholder="CSS selector"></div>
+                            <div class="col-md-6"><label class="form-label">Unread Counter Selector</label><input id="selectorUnread" class="form-control" placeholder="CSS selector"></div>
+                            <div class="col-md-6"><label class="form-label">Labels Selector</label><input id="selectorLabels" class="form-control" placeholder="CSS selector"></div>
+                            <div class="col-md-6"><label class="form-label">Open Chat Selector</label><input id="selectorOpenChat" class="form-control" placeholder="CSS selector"></div>
+                        </div>
+                        <label class="form-label">SELECTORS_JSON</label>
+                        <textarea id="selectorsJson" class="form-control font-monospace" rows="9" dir="ltr" placeholder='{"chatList":"...","messageList":"..."}'></textarea>
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <button class="btn btn-primary" onclick="validateSelectors()">Validate JSON</button>
+                            <button class="btn btn-outline-primary" onclick="navigate('diagnostics')">Run Diagnostics</button>
+                            <button class="btn btn-outline-secondary" onclick="copySelectors()">Copy JSON</button>
+                        </div>
+                        <div id="selectorMessage" class="mt-3"></div>
+                    </div>
+
+                    <!-- DATA -->
+                    <div class="settings-panel" id="setting-data">
+                        <h5 class="fw-bold">Data & Privacy</h5><p class="muted">Control stored information and privacy</p><hr>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>STORE_TEXT</strong><div class="muted">Allow storing message text in the configured data store</div></div><div class="form-check form-switch"><input id="storeText" class="form-check-input" type="checkbox"></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Store Chat Metadata</strong><div class="muted">Store conversation IDs, timestamps and status where supported</div></div><div class="form-check form-switch"><input id="storeMetadata" class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Diagnostic Data Masking</strong><div class="muted">Mask personal data in diagnostic output</div></div><div class="form-check form-switch"><input id="maskDiagnostics" class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="mt-3"><label class="form-label">Data Retention (days)</label><input id="retentionDays" type="number" min="0" class="form-control" value="0"><small class="muted">0 means not configured by this UI; it does not automatically delete data.</small></div>
+                    </div>
+
+                    <!-- SECURITY -->
+                    <div class="settings-panel" id="setting-security">
+                        <h5 class="fw-bold">Security</h5><p class="muted">Authentication, sessions and credential protection</p><hr>
+                        <div class="mb-3"><label class="form-label">Session Timeout (minutes)</label><input id="sessionTimeout" type="number" class="form-control" min="1" value="30"></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Secure Credential Storage</strong><div class="muted">Use operating-system protected storage when supported</div></div><div class="form-check form-switch"><input id="secureCredentials" class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Require Authentication</strong><div class="muted">Require a valid login before accessing the application</div></div><div class="form-check form-switch"><input id="requireAuth" class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="alert alert-light border mt-3">تفعيل هذه الخيارات من الواجهة لا يفرض الحماية وحده؛ يجب تطبيقها في كود التطبيق والخادم.</div>
+                    </div>
+
+                    <!-- NOTIFICATIONS -->
+                    <div class="settings-panel" id="setting-notifications">
+                        <h5 class="fw-bold">Notifications</h5><p class="muted">Choose which application events should trigger notifications</p><hr>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>New Conversation</strong><div class="muted">Notify when a new conversation is detected</div></div><div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Urgent Conversation</strong><div class="muted">Notify for high-priority conversations</div></div><div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Follow-up Due</strong><div class="muted">Notify when a follow-up is due</div></div><div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div></div>
+                        <div class="setting-row d-flex justify-content-between align-items-center"><div><strong>Connection Lost</strong><div class="muted">Notify when WhatsApp or the backend connection is lost</div></div><div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div></div>
+                    </div>
+
+                    <!-- SYSTEM -->
+                    <div class="settings-panel" id="setting-system">
+                        <h5 class="fw-bold">System</h5><p class="muted">Application information and maintenance</p><hr>
+                        <div class="row g-3">
+                            <div class="col-md-6"><label class="form-label">Application</label><input class="form-control" value="BH WhatsApp Desk" disabled></div>
+                            <div class="col-md-6"><label class="form-label">Application Version</label><input class="form-control" value="Not connected" disabled></div>
+                            <div class="col-md-6"><label class="form-label">Runtime</label><input class="form-control" value="Electron / Chromium (when integrated)" disabled></div>
+                            <div class="col-md-6"><label class="form-label">Platform</label><input class="form-control" value="Windows (when integrated)" disabled></div>
+                        </div>
+                        <hr>
+                        <button class="btn btn-outline-primary" onclick="navigate('diagnostics')">Open Diagnostics</button>
+                        <button class="btn btn-outline-danger" onclick="if(confirm('Reset the visible form fields? This does not clear backend data.')) document.querySelectorAll('#settings input').forEach(e=>{if(e.type==='checkbox')e.checked=false;else if(!e.disabled)e.value='';})">Reset Form Fields</button>
+                    </div>
+
+                    <hr class="mt-4">
+                    <div class="d-flex justify-content-end gap-2">
+                        <button class="btn btn-outline-secondary" onclick="location.reload()">Cancel</button>
+                        <button class="btn btn-primary" onclick="saveSettings()"><i class="bi bi-check2 me-1"></i> Save Settings</button>
+                    </div>
+                    <div id="settingsMessage" class="mt-3"></div>
+                </div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAGNOSTICS -->
+    <section class="page" id="diagnostics">
+        <div class="d-flex justify-content-between align-items-center mb-3"><div><h4 class="fw-bold">WhatsApp Diagnostics</h4><div class="muted">Connection and selector health checks</div></div><button class="btn btn-primary" onclick="runDiagnostics()"><i class="bi bi-arrow-repeat me-1"></i> Run Diagnostics</button></div>
+        <div class="alert alert-warning"><i class="bi bi-shield-exclamation me-2"></i>لا تعرض نتائج التشخيص أرقام الهواتف أو أسماء العملاء أو نصوص الرسائل. النتائج الحالية توضح حالة الواجهة فقط ما لم يتم ربط الفحوصات الفعلية.</div>
+        <div class="card mb-3"><div class="card-header">Connection Status</div><div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4"><div class="score-box"><div class="muted mb-2">WhatsApp Session</div><span id="diagSession" class="badge badge-secondary-soft">Not checked</span></div></div>
+                <div class="col-md-4"><div class="score-box"><div class="muted mb-2">Backend API</div><span id="diagApi" class="badge badge-secondary-soft">Not checked</span></div></div>
+                <div class="col-md-4"><div class="score-box"><div class="muted mb-2">Last Sync</div><strong id="diagSync">—</strong></div></div>
+            </div>
+        </div></div>
+        <div class="card"><div class="card-header">Component Checks</div><div class="table-responsive"><table class="table">
+            <thead><tr><th>Component</th><th>Purpose</th><th>Status</th></tr></thead>
+            <tbody id="diagRows">
+                <tr><td>Chat List Selector</td><td>Locate conversations</td><td><span class="badge badge-secondary-soft">Not checked</span></td></tr>
+                <tr><td>Message List Selector</td><td>Locate messages</td><td><span class="badge badge-secondary-soft">Not checked</span></td></tr>
+                <tr><td>Unread Counter</td><td>Read unread counts</td><td><span class="badge badge-secondary-soft">Not checked</span></td></tr>
+                <tr><td>Labels Selector</td><td>Read labels</td><td><span class="badge badge-secondary-soft">Not checked</span></td></tr>
+                <tr><td>Open Chat Selector</td><td>Locate a chat to open</td><td><span class="badge badge-secondary-soft">Not checked</span></td></tr>
+            </tbody>
+        </table></div></div>
+    </section>
+
+    </div>
+</main>
+
+<!-- REVIEW MODAL -->
+<div class="modal fade" id="reviewModal" tabindex="-1">
+<div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content">
+    <div class="modal-header"><div><h5 class="modal-title fw-bold">Conversation Review</h5><small class="muted">Quality assurance evaluation</small></div><button class="btn-close ms-0" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+        <div class="alert alert-light border"><i class="bi bi-info-circle me-2"></i>يجب تحميل المحادثة الحقيقية من مصدر البيانات. بيانات المحادثة في هذا النموذج تجريبية.</div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-4"><label class="form-label">Conversation</label><input id="reviewConversation" class="form-control" value="Customer 001"></div>
+            <div class="col-md-4"><label class="form-label">Employee</label><select id="reviewEmployee" class="form-select"><option>Ahmed</option><option>Mona</option></select></div>
+            <div class="col-md-4"><label class="form-label">Reviewer</label><input id="reviewerName" class="form-control" value="Supervisor"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <h6 class="fw-bold mb-3">Conversation Transcript</h6>
+                <div class="border rounded-3 p-3 mb-4" style="background:#fbfcfb">
+                    <div class="muted small text-center mb-3">Read-only transcript preview</div>
+                    <div class="chat-message">Customer message preview</div>
+                    <div class="chat-message agent">Agent response preview</div>
+                    <div class="muted small mt-3">Replace this preview with messages loaded from the application.</div>
+                </div>
+                <h6 class="fw-bold mb-3">Reviewer Notes</h6>
+                <div class="mb-3"><label class="form-label">Positive Feedback</label><textarea id="reviewPositive" class="form-control" rows="2"></textarea></div>
+                <div class="mb-3"><label class="form-label">Errors / Improvement Areas</label><textarea id="reviewIssues" class="form-control" rows="2"></textarea></div>
+                <div class="mb-3"><label class="form-label">Corrective Action</label><textarea id="reviewAction" class="form-control" rows="2"></textarea></div>
+            </div>
+            <div class="col-lg-5">
+                <h6 class="fw-bold mb-3">Evaluation Criteria</h6>
+                <div id="reviewCriteria"></div>
+                <div class="score-box mt-3">
+                    <div class="d-flex justify-content-between"><strong>Total Score</strong><strong id="reviewTotal">0 / 60</strong></div>
+                    <div class="progress mt-3" style="height:8px"><div id="reviewProgress" class="progress-bar" style="width:0%;background:var(--primary)"></div></div>
+                    <div class="mt-3 d-flex justify-content-between"><span class="muted">Evaluation</span><strong id="reviewGrade">Not rated</strong></div>
+                </div>
+                <div class="mt-3"><label class="form-label">Review Status</label><select id="reviewStatus" class="form-select"><option>In Review</option><option>Needs Re-review</option><option>Completed</option></select></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer flex-wrap">
+        <button class="btn btn-outline-secondary me-auto" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-outline-warning" onclick="setReviewStatus('Needs Re-review')">Return for Re-review</button>
+        <button class="btn btn-outline-primary" onclick="saveReview('draft')">Save Review</button>
+        <button class="btn btn-primary" onclick="saveReview('approve')">Approve Review</button>
+    </div>
+</div></div>
+</div>
+
+<!-- EMPLOYEE MODAL -->
+<div class="modal fade" id="employeeModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Employee Details</h5><button class="btn-close ms-0" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+        <input type="hidden" id="employeeEditIndex">
+        <div class="mb-3"><label class="form-label">Full Name</label><input id="employeeName" class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Username</label><input id="employeeUsername" class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Role</label><select id="employeeRole" class="form-select"><option>Agent</option><option>Supervisor</option><option>Reviewer</option><option>Administrator</option></select></div>
+        <div class="mb-3"><label class="form-label">Status</label><select id="employeeStatus" class="form-select"><option>Active</option><option>Inactive</option></select></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" onclick="saveEmployee()">Save Employee</button></div>
+</div></div></div>
+
+<!-- ROLE MODAL -->
+<div class="modal fade" id="roleModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Role & Permissions</h5><button class="btn-close ms-0" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+        <input type="hidden" id="roleEditIndex">
+        <div class="mb-3"><label class="form-label">Role Name</label><input id="roleName" class="form-control" placeholder="Role name"></div>
+        <div class="mb-3"><label class="form-label">Description</label><input id="roleDescription" class="form-control" placeholder="Role description"></div>
+        <h6 class="fw-bold mb-3">Permissions</h6>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="score-box">
+                    <strong>Conversations</strong>
+                    <div class="form-check mt-2"><input class="form-check-input permission" type="checkbox" value="View Conversations"><label class="form-check-label">View Conversations</label></div>
+                    <div class="form-check mt-2"><input class="form-check-input permission" type="checkbox" value="Assign Conversations"><label class="form-check-label">Assign Conversations</label></div>
+                    <div class="form-check mt-2"><input class="form-check-input permission" type="checkbox" value="Manage Queue"><label class="form-check-label">Manage Queue</label></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="score-box">
+                    <strong>Quality & Reports</strong>
+                    <div class="form-check mt-2"><input class="form-check-input permission" type="checkbox" value="Create Reviews"><label class="form-check-label">Create Reviews</label></div>
+                    <div class="form-check mt-2"><input class="form-check-input permission" type="checkbox" value="Approve Reviews"><label class="form-check-label">Approve Reviews</label></div>
+                    <div class="form-check mt-2"><input class="form-check-input permission" type="checkbox" value="View Reports"><label class="form-check-label">View Reports</label></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="score-box">
+                    <strong>Administration</strong>
+                    <div class="form-check mt-2"><input class="form-check-input permission" type="checkbox" value="Manage Employees"><label class="form-check-label">Manage Employees</label></div>
+                    <div class="form-check mt-2"><input class="form-check-input permission" type="checkbox" value="Manage Roles"><label class="form-check-label">Manage Roles</label></div>
+                    <div class="form-check mt-2"><input class="form-check-input permission" type="checkbox" value="Manage Settings"><label class="form-check-label">Manage Settings</label></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" onclick="saveRole()">Save Role</button></div>
+</div></div></div>
+
+<!-- DEVICE MODAL -->
+<div class="modal fade" id="deviceModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Device Configuration</h5><button class="btn-close ms-0" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+        <input type="hidden" id="deviceEditIndex">
+        <div class="mb-3"><label class="form-label">Device Name</label><input id="deviceName" class="form-control"></div>
+        <div class="mb-3"><label class="form-label">Assigned Employee</label><select id="deviceEmployee" class="form-select"><option>Ahmed</option><option>Mona</option><option>Unassigned</option></select></div>
+        <div class="mb-3"><label class="form-label">Device Token</label><input id="deviceTokenModal" type="password" class="form-control" placeholder="Stored securely by the application"></div>
+        <div class="alert alert-warning small">لا تحفظ رمز الجهاز في HTML ثابت أو في ملفات مكشوفة. يجب أن تتم إدارة الرمز بأمان في التطبيق.</div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" onclick="saveDevice()">Save Device</button></div>
+</div></div></div>
+
+<!-- GENERIC RECORD MODAL -->
+<div class="modal fade" id="recordModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="recordModalTitle">Add Record</h5><button class="btn-close ms-0" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+        <div class="mb-3"><label class="form-label">Customer</label><input id="recordCustomer" class="form-control"></div>
+        <div class="mb-3"><label class="form-label">Assigned Employee</label><input id="recordEmployee" class="form-control"></div>
+        <div class="mb-3"><label class="form-label">Due Date / Request Date</label><input id="recordDate" type="date" class="form-control"></div>
+        <div class="mb-3"><label class="form-label">Details / Notes</label><textarea id="recordNotes" class="form-control" rows="3"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary" onclick="saveRecord()">Save</button></div>
+</div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const pageNames = {
+    dashboard: 'Dashboard', inbox: 'Conversations', queue: 'Queue',
+    followups: 'Follow-ups', requests: 'Item Requests', reports: 'Reports',
+    performance: 'Employee Performance', reviews: 'Reviews', ai: 'AI Scoring',
+    employees: 'Employees', roles: 'Roles & Permissions', devices: 'Devices',
+    settings: 'Settings', diagnostics: 'WhatsApp Diagnostics'
+};
+
+function navigate(page, settingTab) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.sidebar .nav-link').forEach(a => a.classList.remove('active'));
+
+    const section = document.getElementById(page);
+    if (section) section.classList.add('active');
+
+    const nav = document.querySelector('.sidebar [data-page="' + page + '"]');
+    if (nav) nav.classList.add('active');
+
+    document.getElementById('pageTitle').textContent = pageNames[page] || page;
+
+    if (page === 'settings' && settingTab) activateSettingsTab(settingTab);
+}
+
+document.querySelectorAll('.sidebar [data-page]').forEach(link => {
+    link.addEventListener('click', () => navigate(link.dataset.page));
+});
+
+function activateSettingsTab(tab) {
+    document.querySelectorAll('#settingsNav button').forEach(b => {
+        b.classList.toggle('active', b.dataset.target === tab);
+    });
+    document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('setting-' + tab);
+    if (panel) panel.classList.add('active');
+}
+
+document.querySelectorAll('#settingsNav button').forEach(button => {
+    button.addEventListener('click', () => activateSettingsTab(button.dataset.target));
+});
+
+function selectChat(element, name) {
+    document.querySelectorAll('.chat-item').forEach(c => c.classList.remove('active'));
+    element.classList.add('active');
+    document.getElementById('chatTitle').textContent = name;
+}
+
+function testConnection() {
+    const url = document.getElementById('apiUrl').value.trim();
+    const status = document.getElementById('apiStatus');
+    if (!url) {
+        status.className = 'badge badge-danger-soft';
+        status.textContent = 'API URL required';
+        return;
+    }
+    status.className = 'badge badge-warning-soft';
+    status.textContent = 'UI validation only';
+    alert('تم التحقق من وجود URL فقط. اختبار اتصال حقيقي يتطلب استدعاء Backend من التطبيق.');
+}
+
+function saveSettings() {
+    const config = {
+        appName: document.getElementById('appName').value,
+        apiUrl: document.getElementById('apiUrl').value,
+        whatsappUrl: document.getElementById('waUrl').value,
+        syncInterval: Number(document.getElementById('syncInterval').value),
+        readChats: document.getElementById('readChats').checked,
+        readMessages: document.getElementById('readMessages').checked,
+        readLabels: document.getElementById('readLabels').checked,
+        readUnread: document.getElementById('readUnread').checked,
+        readArchived: document.getElementById('readArchived').checked,
+        readGroups: document.getElementById('readGroups').checked,
+        openWhatsApp: document.getElementById('openWhatsApp').checked,
+        storeText: document.getElementById('storeText').checked,
+        storeMetadata: document.getElementById('storeMetadata').checked,
+        maskDiagnostics: document.getElementById('maskDiagnostics').checked,
+        retentionDays: Number(document.getElementById('retentionDays').value)
+    };
+    // Prototype only: show the configuration without sending secrets to a server.
+    document.getElementById('settingsMessage').innerHTML =
+        '<div class="alert alert-info">تم جمع الإعدادات في الواجهة فقط. يلزم ربطها بحفظ آمن في التطبيق.</div>';
+    console.log('Non-secret settings preview:', {...config, apiUrl: config.apiUrl ? '[configured]' : ''});
+}
+
+function validateSelectors() {
+    const message = document.getElementById('selectorMessage');
+    const json = document.getElementById('selectorsJson').value.trim();
+    if (!json) {
+        message.innerHTML = '<div class="alert alert-warning">أدخل SELECTORS_JSON أولاً.</div>';
+        return;
+    }
+    try {
+        JSON.parse(json);
+        message.innerHTML = '<div class="alert alert-success">صيغة JSON صحيحة. لم يتم اختبار المحددات على WhatsApp Web.</div>';
+    } catch (e) {
+        message.innerHTML = '<div class="alert alert-danger">JSON غير صحيح: ' + escapeHtml(e.message) + '</div>';
+    }
+}
+
+function copySelectors() {
+    const text = document.getElementById('selectorsJson').value;
+    if (!text) return alert('لا يوجد JSON لنسخه.');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => alert('تم النسخ.'));
+    } else {
+        document.getElementById('selectorsJson').select();
+        alert('انسخ النص المحدد يدويًا.');
+    }
+}
+
+function runDiagnostics() {
+    document.getElementById('diagApi').textContent =
+        document.getElementById('apiUrl').value.trim() ? 'URL configured; not tested' : 'URL missing';
+    document.getElementById('diagSession').textContent = 'Requires Electron check';
+    document.getElementById('diagSync').textContent = 'Not available';
+    document.getElementById('diagRows').innerHTML = [
+        ['Chat List Selector', 'Locate conversations'],
+        ['Message List Selector', 'Locate messages'],
+        ['Unread Counter', 'Read unread counts'],
+        ['Labels Selector', 'Read labels'],
+        ['Open Chat Selector', 'Locate a chat to open']
+    ].map(row => '<tr><td>' + row[0] + '</td><td>' + row[1] +
+        '</td><td><span class="badge badge-secondary-soft">Requires runtime check</span></td></tr>').join('');
+    alert('تم تحديث حالة الفحوصات الظاهرة. الفحص الفعلي يتطلب الربط مع Electron وWhatsApp reader.');
+}
+
+const reviewCriteria = [
+    'Response Speed',
+    'Communication Style',
+    'Information Accuracy',
+    'Process Compliance',
+    'Problem Resolution',
+    'Conversation Closure'
+];
+
+function initReviewCriteria() {
+    document.getElementById('reviewCriteria').innerHTML = reviewCriteria.map((name, i) => `
+        <div class="score-box mb-2">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <label class="form-label mb-0">${name}</label>
+                <span class="muted" id="scoreLabel${i}">0 / 10</span>
+            </div>
+            <input type="range" class="form-range review-score" min="0" max="10" step="1" value="0" data-index="${i}">
+        </div>
+    `).join('');
+
+    document.querySelectorAll('.review-score').forEach(input => {
+        input.addEventListener('input', updateReviewScore);
+    });
+}
+
+function updateReviewScore() {
+    let total = 0;
+    document.querySelectorAll('.review-score').forEach(input => {
+        const score = Number(input.value);
+        total += score;
+        document.getElementById('scoreLabel' + input.dataset.index).textContent = score + ' / 10';
+    });
+    document.getElementById('reviewTotal').textContent = total + ' / 60';
+    document.getElementById('reviewProgress').style.width = (total / 60 * 100) + '%';
+    document.getElementById('reviewGrade').textContent =
+        total >= 54 ? 'Excellent' :
+        total >= 48 ? 'Very Good' :
+        total >= 36 ? 'Good' :
+        total > 0 ? 'Needs Improvement' : 'Not rated';
+}
+
+function openReview(conversation) {
+    document.getElementById('reviewConversation').value = conversation || 'Customer 001';
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('reviewModal')).show();
+}
+
+function setReviewStatus(status) {
+    document.getElementById('reviewStatus').value = status;
+}
+
+function saveReview(action) {
+    updateReviewScore();
+    if (action === 'approve') document.getElementById('reviewStatus').value = 'Completed';
+    alert('تم تجهيز بيانات المراجعة في الواجهة. يلزم ربط الحفظ والاعتماد بقاعدة البيانات والصلاحيات.');
+}
+
+function openEmployee() {
+    document.getElementById('employeeEditIndex').value = '';
+    ['employeeName','employeeUsername'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('employeeRole').value = 'Agent';
+    document.getElementById('employeeStatus').value = 'Active';
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('employeeModal')).show();
+}
+
+function editEmployee(button) {
+    const row = button.closest('tr');
+    document.getElementById('employeeEditIndex').value = Array.from(row.parentNode.children).indexOf(row);
+    document.getElementById('employeeName').value = row.cells[0].textContent.trim();
+    document.getElementById('employeeUsername').value = row.cells[1].textContent.trim();
+    document.getElementById('employeeRole').value = row.cells[2].textContent.trim();
+    document.getElementById('employeeStatus').value = row.cells[3].textContent.includes('Inactive') ? 'Inactive' : 'Active';
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('employeeModal')).show();
+}
+
+function saveEmployee() {
+    const name = document.getElementById('employeeName').value.trim();
+    const username = document.getElementById('employeeUsername').value.trim();
+    if (!name || !username) return alert('أدخل اسم الموظف واسم المستخدم.');
+    const role = document.getElementById('employeeRole').value;
+    const status = document.getElementById('employeeStatus').value;
+    const index = document.getElementById('employeeEditIndex').value;
+    const html = `<td>${escapeHtml(name)}</td><td>${escapeHtml(username)}</td><td>${escapeHtml(role)}</td><td><span class="badge ${status === 'Active' ? 'badge-soft' : 'badge-secondary-soft'}">${status}</span></td><td><button class="btn btn-sm btn-outline-primary" onclick="editEmployee(this)">Edit</button></td>`;
+    const rows = document.getElementById('employeeRows');
+    if (index !== '') rows.children[Number(index)].innerHTML = html;
+    else rows.insertAdjacentHTML('beforeend', '<tr>' + html + '</tr>');
+    bootstrap.Modal.getInstance(document.getElementById('employeeModal')).hide();
+}
+
+function openRole() {
+    document.getElementById('roleEditIndex').value = '';
+    document.getElementById('roleName').value = '';
+    document.getElementById('roleDescription').value = '';
+    document.querySelectorAll('.permission').forEach(p => p.checked = false);
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('roleModal')).show();
+}
+
+function editRole(button) {
+    const row = button.closest('tr');
+    document.getElementById('roleEditIndex').value = Array.from(row.parentNode.children).indexOf(row);
+    document.getElementById('roleName').value = row.cells[0].textContent.trim();
+    document.getElementById('roleDescription').value = row.cells[1].textContent.trim();
+    document.querySelectorAll('.permission').forEach(p => p.checked = false);
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('roleModal')).show();
+}
+
+function saveRole() {
+    const name = document.getElementById('roleName').value.trim();
+    if (!name) return alert('أدخل اسم الدور.');
+    const description = document.getElementById('roleDescription').value.trim();
+    const permissions = [...document.querySelectorAll('.permission:checked')].map(p => p.value);
+    const summary = permissions.length ? permissions.join(', ') : 'No permissions selected';
+    const index = document.getElementById('roleEditIndex').value;
+    const html = `<td>${escapeHtml(name)}</td><td>${escapeHtml(description)}</td><td>${escapeHtml(summary)}</td><td><button class="btn btn-sm btn-outline-primary" onclick="editRole(this)">Edit</button></td>`;
+    const rows = document.getElementById('roleRows');
+    if (index !== '') rows.children[Number(index)].innerHTML = html;
+    else rows.insertAdjacentHTML('beforeend', '<tr>' + html + '</tr>');
+    bootstrap.Modal.getInstance(document.getElementById('roleModal')).hide();
+}
+
+function openDevice() {
+    document.getElementById('deviceEditIndex').value = '';
+    document.getElementById('deviceName').value = '';
+    document.getElementById('deviceEmployee').value = 'Unassigned';
+    document.getElementById('deviceTokenModal').value = '';
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('deviceModal')).show();
+}
+
+function editDevice(button) {
+    const row = button.closest('tr');
+    document.getElementById('deviceEditIndex').value = Array.from(row.parentNode.children).indexOf(row);
+    document.getElementById('deviceName').value = row.cells[0].textContent.trim();
+    document.getElementById('deviceEmployee').value = row.cells[1].textContent.trim();
+    document.getElementById('deviceTokenModal').value = '';
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('deviceModal')).show();
+}
+
+function saveDevice() {
+    const name = document.getElementById('deviceName').value.trim();
+    if (!name) return alert('أدخل اسم الجهاز.');
+    const employee = document.getElementById('deviceEmployee').value;
+    const index = document.getElementById('deviceEditIndex').value;
+    const html = `<td>${escapeHtml(name)}</td><td>${escapeHtml(employee)}</td><td><span class="badge badge-secondary-soft">Not verified</span></td><td>—</td><td><button class="btn btn-sm btn-outline-primary" onclick="editDevice(this)">Configure</button></td>`;
+    const rows = document.getElementById('deviceRows');
+    if (index !== '') rows.children[Number(index)].innerHTML = html;
+    else rows.insertAdjacentHTML('beforeend', '<tr>' + html + '</tr>');
+    bootstrap.Modal.getInstance(document.getElementById('deviceModal')).hide();
+}
+
+let recordType = 'Follow-up';
+function openRecordModal(type) {
+    recordType = type;
+    document.getElementById('recordModalTitle').textContent = 'Add ' + type;
+    ['recordCustomer','recordEmployee','recordDate','recordNotes'].forEach(id => document.getElementById(id).value = '');
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('recordModal')).show();
+}
+
+function saveRecord() {
+    const customer = document.getElementById('recordCustomer').value.trim();
+    const employee = document.getElementById('recordEmployee').value.trim();
+    const date = document.getElementById('recordDate').value;
+    const notes = document.getElementById('recordNotes').value.trim();
+    if (!customer) return alert('أدخل العميل.');
+    if (recordType === 'Follow-up') {
+        document.getElementById('followupRows').insertAdjacentHTML('beforeend',
+            `<tr><td>${escapeHtml(customer)}</td><td>${escapeHtml(employee)}</td><td>${escapeHtml(date)}</td><td>${escapeHtml(notes)}</td><td><span class="badge badge-warning-soft">Pending</span></td><td><button class="btn btn-sm btn-outline-primary" onclick="editRow(this)">Edit</button></td></tr>`);
+    } else {
+        const tbody = document.querySelector('#requests tbody');
+        const id = 'REQ-' + String(tbody.children.length + 1).padStart(3, '0');
+        tbody.insertAdjacentHTML('beforeend',
+            `<tr><td>${id}</td><td>${escapeHtml(customer)}</td><td>${escapeHtml(notes)}</td><td>${escapeHtml(employee)}</td><td>${escapeHtml(date)}</td><td><span class="badge badge-warning-soft">Pending</span></td><td><button class="btn btn-sm btn-outline-primary" onclick="editRow(this)">Edit</button></td></tr>`);
+    }
+    bootstrap.Modal.getInstance(document.getElementById('recordModal')).hide();
+}
+
+function editRow(button) {
+    alert('نموذج التعديل التفصيلي لهذا السجل يحتاج ربطًا بنموذج البيانات الخاص به.');
+}
+
+function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[ch]);
+}
+
+initReviewCriteria();
+</script>
+</body>
+</html>
